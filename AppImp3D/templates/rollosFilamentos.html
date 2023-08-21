@@ -19,9 +19,16 @@
 
     <br>
 
+    <h2>Busqueda Rollos</h2>
+    <form action="{% url 'rollosFilamentos' %}" method="GET">
+        <input type="text" name="materialBusqueda" id="materialBusqueda" placeholder="material">
+        <input type="text" name="colorBusqueda" id="colorBusqueda" placeholder="color">
+        <input type="submit" value="buscar rollo">
+    </form>
+    
+    <h3> {{ mensajeBusqueda }} </h3>
 
-
-
+    <br>
 
     <h2> Listado Filamentos</h2>
     <ul>

@@ -54,13 +54,30 @@ def rollosFilamentos(request):
         else:
             mensaje="Datos Invalidos"
             #return render(request,"impresoras.html", {"mensaje": "Datos Invalidos","formulario":formulario_impresora})
+        mensajeBusqueda=""
+        rollosFilamentos=RolloFilamento.objects.all()
+
     else:
-        
-        ##profesores=Profesor.objects.all()
-        mensaje=""
+        try:
+            material=request.GET["materialBusqueda"]
+            color=request.GET["colorBusqueda"]
+            mensaje=""
+            #material=""
+            #color=""
+
+            if material!="" or color!="":
+                rollosFilamentos=RolloFilamento.objects.filter(material__icontains=material,color__icontains=color)
+                mensajeBusqueda="Resultados de la busqueda:"
+            else:
+                rollosFilamentos=RolloFilamento.objects.all()
+                mensajeBusqueda="No ingresaste nada"
+        except:
+            mensajeBusqueda=""
+            mensaje=""
+            rollosFilamentos=RolloFilamento.objects.all()
     formulario_rolloFilamento=RolloFilamentoForm()
-    rollosFilamentos=RolloFilamento.objects.all()
-    return render(request,"rollosFilamentos.html",{"mensaje": mensaje,"formulario":formulario_rolloFilamento, "rollosFilamentos":rollosFilamentos})
+    
+    return render(request,"rollosFilamentos.html",{"mensaje": mensaje,"formulario":formulario_rolloFilamento, "rollosFilamentos":rollosFilamentos, "mensajeBusqueda":mensajeBusqueda})
 
 
 
