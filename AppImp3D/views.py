@@ -41,6 +41,8 @@ def impresoras(request):
 
 
 def rollosFilamentos(request):
+    busquedaIs = request.GET.get('busquedaIs')
+    print(busquedaIs)
     if request.method=="POST":
         form=RolloFilamentoForm(request.POST)
         if form.is_valid():
@@ -58,7 +60,7 @@ def rollosFilamentos(request):
         rollosFilamentos=RolloFilamento.objects.all()
 
     else:
-        try:
+        if busquedaIs!='false':
             material=request.GET["materialBusqueda"]
             color=request.GET["colorBusqueda"]
             mensaje=""
@@ -71,12 +73,12 @@ def rollosFilamentos(request):
             else:
                 rollosFilamentos=RolloFilamento.objects.all()
                 mensajeBusqueda="No ingresaste nada"
-        except:
+        else:
             mensajeBusqueda=""
             mensaje=""
             rollosFilamentos=RolloFilamento.objects.all()
     formulario_rolloFilamento=RolloFilamentoForm()
-    
+    #mensaje=busquedaIs
     return render(request,"rollosFilamentos.html",{"mensaje": mensaje,"formulario":formulario_rolloFilamento, "rollosFilamentos":rollosFilamentos, "mensajeBusqueda":mensajeBusqueda})
 
 
